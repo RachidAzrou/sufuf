@@ -1,10 +1,21 @@
-const socket = new WebSocket('ws://localhost:3000');
+// Controleer of de WebSocket-verbinding al bestaat voordat je deze initialiseert
+if (!socket || socket.readyState === WebSocket.CLOSED) {
+    const socket = new WebSocket('ws://localhost:3000');
 
-socket.addEventListener('message', function (event) {
-    const data = JSON.parse(event.data);
-    console.log("Received status:", data.status); // Voeg dit console.log-statement toe
-    updateLights(data.status);
-});
+    // Voeg de event listeners toe aan de WebSocket-verbinding
+    socket.addEventListener('open', function() {
+        console.log('WebSocket-verbinding geopend');
+    });
+
+    socket.addEventListener('message', function (event) {
+        const data = JSON.parse(event.data);
+        updateLights(data.status);
+    });
+
+    socket.addEventListener('close', function() {
+        console.log('WebSocket-verbinding gesloten');
+    });
+}
 
 function updateLights(status) {
     const greenLight = document.getElementById("greenLight");
