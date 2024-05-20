@@ -1,9 +1,13 @@
+const socket = new WebSocket('ws://localhost:8080');
+
 document.getElementById("okButton").addEventListener("click", function() {
     updateLights("OK");
+    socket.send(JSON.stringify({ status: "OK" }));
 });
 
 document.getElementById("nokButton").addEventListener("click", function() {
     updateLights("NOK");
+    socket.send(JSON.stringify({ status: "NOK" }));
 });
 
 function updateLights(status) {
@@ -21,8 +25,4 @@ function updateLights(status) {
         greenLight.classList.remove("on");
         greenLight.classList.add("off");
     }
-
-    // Stuur statusupdate naar de Imam
-    // Hier zou je normaal gesproken een server-aanroep doen
-    console.log("Statusupdate naar de Imam:", status);
 }
