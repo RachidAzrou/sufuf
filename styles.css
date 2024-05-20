@@ -1,12 +1,75 @@
-/* Voeg deze stijlen toe om de lichten weer te geven */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+main {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+#roleSelection {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
 .light {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     border: 2px solid #000;
     margin-bottom: 10px;
+    background-color: #f0f0f0;
+    position: relative;
 }
 
-.on {
-    background-color: green;
+.light.on {
+    background-color: #4CAF50; /* Groen */
+}
+
+.light.off {
+    background-color: #F44336; /* Rood */
+}
+
+.light::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
