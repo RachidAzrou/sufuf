@@ -1,1 +1,3 @@
-// Niets nodig, omdat de Imam alleen de status van de lichten bekijkt
+function receiveVolunteerStatus(status) {
+    document.getElementById("statusDisplay").textContent = status;
+}
