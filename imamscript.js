@@ -2,6 +2,7 @@ const socket = new WebSocket('ws://localhost:8080');
 
 socket.addEventListener('message', function (event) {
     const data = JSON.parse(event.data);
+    console.log("Received status:", data.status); // Voeg dit console.log-statement toe
     updateLights(data.status);
 });
 
