@@ -1,11 +1,13 @@
 const socket = new WebSocket('ws://localhost:8080');
 
 document.getElementById("okButton").addEventListener("click", function() {
+    console.log("OK button clicked"); // Voeg dit console.log-statement toe
     updateLights("OK");
     socket.send(JSON.stringify({ status: "OK" }));
 });
 
 document.getElementById("nokButton").addEventListener("click", function() {
+    console.log("NOK button clicked"); // Voeg dit console.log-statement toe
     updateLights("NOK");
     socket.send(JSON.stringify({ status: "NOK" }));
 });
