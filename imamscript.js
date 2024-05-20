@@ -1,4 +1,10 @@
-// Functie om statusupdate van Vrijwilliger te ontvangen en de lichten bij te werken
+const socket = new WebSocket('ws://localhost:8080');
+
+socket.addEventListener('message', function (event) {
+    const data = JSON.parse(event.data);
+    updateLights(data.status);
+});
+
 function updateLights(status) {
     const greenLight = document.getElementById("greenLight");
     const redLight = document.getElementById("redLight");
@@ -15,11 +21,3 @@ function updateLights(status) {
         greenLight.classList.add("off");
     }
 }
-
-// Simuleer een update vanuit de vrijwilliger
-// Dit zou normaal gesproken via een server-update gaan
-setInterval(() => {
-    // Voor demonstratie, wissel de status elke 5 seconden
-    const status = Math.random() > 0.5 ? "OK" : "NOK";
-    updateLights(status);
-}, 5000);
