@@ -7,13 +7,13 @@ socket.addEventListener('open', function() {
 document.getElementById("okButton").addEventListener("click", function() {
     console.log("OK button clicked");
     updateLights("OK");
-    socket.send(JSON.stringify({ status: "OK" }));
+    socket.send(JSON.stringify({ role: "volunteer", status: "OK" })); // Rol toegevoegd aan het bericht
 });
 
 document.getElementById("nokButton").addEventListener("click", function() {
     console.log("NOK button clicked");
     updateLights("NOK");
-    socket.send(JSON.stringify({ status: "NOK" }));
+    socket.send(JSON.stringify({ role: "volunteer", status: "NOK" })); // Rol toegevoegd aan het bericht
 });
 
 socket.addEventListener('message', function (event) {
