@@ -1,6 +1,6 @@
 // Controleer of de WebSocket-verbinding al bestaat voordat je deze initialiseert
 if (!socket || socket.readyState === WebSocket.CLOSED) {
-    const socket = new WebSocket('ws://localhost:3000');
+    const socket = new WebSocket(`wss://${window.location.hostname}`);
 
     // Voeg de event listeners toe aan de WebSocket-verbinding
     socket.addEventListener('open', function() {
