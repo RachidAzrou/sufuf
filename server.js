@@ -4,27 +4,24 @@ const http = require('http');
 const path = require('path');
 
 const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-const PORT = process.env.PORT || 3000;
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
 wss.on('connection', ws => {
     ws.on('message', message => {
-        const data = JSON.parse(message);
-        if (data.role === "volunteer") { // Check de rol van de client
-            wss.clients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(data)); // Stuur de status van de vrijwilliger naar alle clients (inclusief de imam)
-                }
-            });
-        }
+        // Stuur het bericht door naar alle verbonden clients (inclusief de imam)
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
     });
 });
 
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
