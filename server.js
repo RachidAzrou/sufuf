@@ -15,11 +15,13 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', ws => {
     ws.on('message', message => {
         const data = JSON.parse(message);
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(data));
-            }
-        });
+        if (data.role === "volunteer") { // Check de rol van de client
+            wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify(data)); // Stuur de status van de vrijwilliger naar alle clients (inclusief de imam)
+                }
+            });
+        }
     });
 });
 
