@@ -1,17 +1,17 @@
-const socket = new WebSocket('ws://localhost:3000');
+const socket = new WebSocket(`wss://${window.location.hostname}`);
 
 socket.addEventListener('open', function() {
     console.log('WebSocket-verbinding geopend');
 });
 
 document.getElementById("okButton").addEventListener("click", function() {
-    console.log("OK button clicked"); // Log statement
+    console.log("OK button clicked");
     updateLights("OK");
     socket.send(JSON.stringify({ status: "OK" }));
 });
 
 document.getElementById("nokButton").addEventListener("click", function() {
-    console.log("NOK button clicked"); // Log statement
+    console.log("NOK button clicked");
     updateLights("NOK");
     socket.send(JSON.stringify({ status: "NOK" }));
 });
@@ -19,10 +19,6 @@ document.getElementById("nokButton").addEventListener("click", function() {
 socket.addEventListener('message', function (event) {
     const data = JSON.parse(event.data);
     updateLights(data.status);
-});
-
-socket.addEventListener('close', function() {
-    console.log('WebSocket-verbinding gesloten');
 });
 
 function updateLights(status) {
