@@ -1,4 +1,5 @@
-const socket = new WebSocket(`wss://${window.location.hostname}`);
+// Initiële WebSocket-verbinding
+let socket = new WebSocket(`wss://${window.location.hostname}`);
 
 socket.addEventListener('open', function() {
     console.log('WebSocket-verbinding geopend');
