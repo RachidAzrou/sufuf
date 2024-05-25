@@ -10,6 +10,7 @@ if (!socket || socket.readyState === WebSocket.CLOSED) {
         console.log('WebSocket-verbinding geopend');
     });
 
+    // Voeg event listener toe om berichten van de server te ontvangen
     socket.addEventListener('message', function (event) {
         const data = JSON.parse(event.data);
         updateLights(data.status);
