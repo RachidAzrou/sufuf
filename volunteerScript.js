@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initiële WebSocket-verbinding
-    let socket = new WebSocket(`wss://${window.location.hostname}`);
+    let socket = new WebSocket(`wss://sufuf.vercel.app}`);
 
     socket.addEventListener('open', function() {
         console.log('WebSocket-verbinding geopend');
