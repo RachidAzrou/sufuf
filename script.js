@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://localhost:3000');
+const socket = new WebSocket(window.location.origin.replace(/^http/, 'ws') + '/api');
 
 socket.addEventListener('message', function (event) {
     const status = event.data;
