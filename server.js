@@ -1,31 +1,28 @@
 const express = require('express');
 const http = require('http');
-const path = require('path');
-const socketIO = require('socket.io');
+const WebSocket = require('ws');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const wss = new WebSocket.Server({ server });
 
-// Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+let currentStatus = 'NOK';
 
-// WebSocket event handlers
-io.on('connection', socket => {
-    console.log('A user connected');
+wss.on('connection', ws => {
+    ws.send(currentStatus);
 
-    socket.on('message', data => {
-        // Broadcast the message to all connected clients
-        io.emit('message', data);
-    });
-
-    // Handle disconnect event
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
+    ws.on('message', message => {
+        currentStatus = message;
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(currentStatus);
+            }
+        });
     });
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+app.use(express.static('public'));
+
+server.listen(3000, () => {
+    console.log('Server is running on http://localhost:3000');
 });
