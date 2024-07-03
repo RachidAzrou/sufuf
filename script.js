@@ -1,7 +1,23 @@
-document.getElementById("imamButton").addEventListener("click", function() {
-    window.location.href = "imam.html";
+const socket = new WebSocket('ws://localhost:3000');
+
+socket.addEventListener('message', function (event) {
+    const status = event.data;
+    updateLights(status);
 });
 
-document.getElementById("volunteerButton").addEventListener("click", function() {
-    window.location.href = "volunteer.html";
-});
+function updateStatus(status) {
+    socket.send(status);
+}
+
+function updateLights(status) {
+    const redLight = document.getElementById('light-red');
+    const greenLight = document.getElementById('light-green');
+
+    if (status === 'OK') {
+        redLight.classList.remove('on');
+        greenLight.classList.add('on');
+    } else if (status === 'NOK') {
+        greenLight.classList.remove('on');
+        redLight.classList.add('on');
+    }
+}
